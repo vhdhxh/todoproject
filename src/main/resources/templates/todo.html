@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>TodoList</title>
+</head>
+<body>
+<h1>TodoList</h1>
+<!--<form method="get" action="/add">
+    <input type="text" name="task" placeholder="Add a new task" />
+    <button type="submit">Add</button>
+</form>
+<ul>
+    <li  th:text="${task}"></li>
+    &lt;!&ndash; 여기에 추가된 할 일들을 동적으로 표시합니다 &ndash;&gt;
+</ul>
+
+<p th:text="${task}"></p>-->
+<form action="/add" method="post">
+  <input type="text" name="task" placeholder="Add a new task" />
+  <button type="submit">Add</button>
+</form>
+<ul>
+  <li th:each="task : ${tasks}" th:text="${task}"></li>
+</ul>
+</body>
+</html>
