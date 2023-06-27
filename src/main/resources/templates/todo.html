@@ -15,12 +15,12 @@
 </ul>
 
 <p th:text="${task}"></p>-->
-<form action="/add" method="post">
+<form action="/addtodolist" method="post">
   <input type="text" name="task" placeholder="Add a new task" />
   <button type="submit">Add</button>
 </form>
 <ul>
-  <li th:each="task : ${tasks}" th:text="${task}"></li>
+  <li th:each="task : ${task}" th:text="${task.task}"></li>
 </ul>
 </body>
 </html>
