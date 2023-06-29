@@ -1,26 +1,171 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="../todo.css">
 <head>
   <title>TodoList</title>
 </head>
-<body>
-<h1>TodoList</h1>
-<!--<form method="get" action="/add">
-    <input type="text" name="task" placeholder="Add a new task" />
-    <button type="submit">Add</button>
-</form>
-<ul>
-    <li  th:text="${task}"></li>
-    &lt;!&ndash; 여기에 추가된 할 일들을 동적으로 표시합니다 &ndash;&gt;
-</ul>
+<style>
+    body {
+      display: flex;
+      <!--justify-content: center;
+      align-items: center;-->
+      height: 100vh; /* 화면 전체 높이를 차지하도록 설정합니다. */
+      margin: 0;
+      background-color:#DDDDFF;
+    }
 
-<p th:text="${task}"></p>-->
+    .centered-div {
+
+
+      border-radius:2em;
+      background-color: white;
+      box-shadow: 0 10px 10px rgba(0,0,0,0.3),
+             0 20px 40px rgba(0,0,0,0.3);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .scrollable {
+  overflow: auto;
+
+  width: 500px;
+  height: 400px;
+}
+ .Name {
+    display: flex;
+    position: absolute;
+
+    top: 20%;
+    left: 43%;
+    }
+     .completed {
+    text-decoration: line-through;
+    }
+    li {
+    list-style-type: none;
+    }
+  </style>
+<script>
+
+ function getCurrentDate() {
+      var currentDate = new Date();
+      var year = currentDate.getFullYear();
+      var month = currentDate.getMonth() + 1; // 월은 0부터 시작하므로 1을 더해줍니다.
+      var day = currentDate.getDate();
+      var dayOfWeek = currentDate.getDay();
+      var daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"]; // 요일을 문자열로 표현하기 위한 배열
+
+      return {
+        year: year,
+        month: month,
+        day: day,
+        dayOfWeek: daysOfWeek[dayOfWeek]
+      };
+    }
+
+
+   window.onload = function() {
+    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach(function(checkbox) {
+      var taskId = checkbox.getAttribute('data-task-id');
+      var isChecked = localStorage.getItem(taskId) === 'true';
+      checkbox.checked = isChecked;
+      if (isChecked) {
+        applyCompletedStyle(checkbox);
+      }
+    });
+  };
+
+  function toggleCompleted(checkbox) {
+    if (checkbox.checked) {
+      applyCompletedStyle(checkbox);
+    } else {
+      removeCompletedStyle(checkbox);
+    }
+
+    var taskId = checkbox.getAttribute('data-task-id');
+    // 로컬 스토리지에 체크 상태를 저장합니다.
+    localStorage.setItem(taskId, checkbox.checked);
+    // 체크 여부를 서버로 전송하여 업데이트합니다.
+    // ...
+  }
+
+  function applyCompletedStyle(checkbox) {
+    var span = checkbox.nextElementSibling;
+    span.style.textDecoration = 'line-through';
+  }
+
+  function removeCompletedStyle(checkbox) {
+    var span = checkbox.nextElementSibling;
+    span.style.textDecoration = 'none';
+  }
+
+  </script>
+
+<body>
+
+<span class="Name">
+  <h1 th:text="${UserName}"></h1><h1>님</h1>
+ <h1><a href="/logout">로그아웃</a></h1>
+</span>
+
+<div class="centered-div">
+
+
+
+  <h1>TodoList</h1>
+
+<h1>
+<span id="currentYear"></span>
+<span id="currentMonth"></span>
+<span id="currentDay"></span>
+<span id="currentDayOfWeek"></span>
+</h1>
+
+
 <form action="/addtodolist" method="post">
-  <input type="text" name="task" placeholder="Add a new task" />
+  <input type="text" name="task" placeholder="오늘 할 일을 추가하세요" />
   <button type="submit">Add</button>
 </form>
+<hr style="border:0; height:1px; background: #bbb;">
+  <div class="scrollable">
 <ul>
-  <li th:each="task : ${task}" th:text="${task.task}"></li>
+  <li th:each="task : ${task}">
+    <input type="checkbox" id="checkbox" onchange="toggleCompleted(this)" data-task-id="${task.taskId}">
+    <span id="text" th:text="${task.task}"></span>
+    <button th:onclick="|location.href='@{/deletetodolist(taskId=${task.taskId})}'|">삭제</button>
+  </li>
 </ul>
+   </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  var currentDate = getCurrentDate();
+    document.getElementById("currentYear").textContent =  currentDate.year + "년";
+    document.getElementById("currentMonth").textContent =  currentDate.month + "월";
+    document.getElementById("currentDay").textContent =  currentDate.day + "일";
+    document.getElementById("currentDayOfWeek").textContent =  currentDate.dayOfWeek + "요일";
+</script>
+
+
 </body>
 </html>

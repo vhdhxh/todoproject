@@ -69,5 +69,11 @@ public class UserController {
         return "redirect:/";
     }
 
-
+    @GetMapping("/logout")
+    public String logout(HttpSession httpSession){
+        // 세션에서 회원정보를 삭제한다.
+        httpSession.removeAttribute("loginInfo");
+        return "redirect:/";
+    }
 }
+

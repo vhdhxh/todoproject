@@ -30,13 +30,12 @@ public class ToDoListController {
     @GetMapping("/todo") // 투두리스트
    public String index(Model model , HttpSession session) {
         //데이터베이스에있는 task 값을 select 하여 조회해서 리스트를 뿌려준다.
-        User user = new User();
+        LoginInfo loginInfo = (LoginInfo)session.getAttribute("loginInfo");
+        String UserName = loginInfo.getName();
 
-    /* List<Todo> todo = todoService.getTodolist();
-     model.addAttribute("task", todo);
-        System.out.println(todo);*/
         List<Todo> todo = todoService.getTodolist();
         model.addAttribute("task", todo);
+        model.addAttribute("UserName", UserName);
 
         return "todo";
     }
@@ -64,10 +63,21 @@ public class ToDoListController {
         return "/";
     }
 
-    @PostMapping("/deletetodolist") //리스트 삭제
-     public String deletelist(){
-        return "/";
+    @GetMapping("/deletetodolist") //리스트 삭제
+     public String deletelist(
+            @RequestParam("taskId") int taskId,
+            HttpSession session
+    ) {
+        LoginInfo loginInfo = (LoginInfo) session.getAttribute("loginInfo");
+        if (loginInfo == null) { // 세션에 로그인 정보가 없으면 /loginform으로 redirect
+            return "redirect:/";
+        }
+            todoService.deleteTodo(taskId);
+
+
+        return "redirect:/todo"; // 리스트 보기로 리다이렉트한다.
     }
+
 
 
 

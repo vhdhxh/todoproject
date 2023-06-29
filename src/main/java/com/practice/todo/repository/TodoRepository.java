@@ -23,6 +23,10 @@ public interface TodoRepository extends JpaRepository<Todo , Integer> {
     List<Todo> findByUser(User UserId);
     List <Todo> findAll();
 
+    List <Todo> deleteBytaskId(int taskId);
+
+
+
 }
 
 

@@ -24,6 +24,8 @@ public class TodoService {
     @Autowired
     private final HttpSession session;
 
+
+
     @Transactional
     public void addTodo(int userId, String task) {
         User user = userRepository.findById(userId).orElseThrow();
@@ -59,7 +61,7 @@ public class TodoService {
 
     @Transactional
     public void deleteTodo(int taskId) {
-        todoRepository.deleteById(taskId);
+        todoRepository.deleteBytaskId(taskId);
     }
 
     @Transactional
