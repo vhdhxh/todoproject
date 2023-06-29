@@ -4,4 +4,4 @@
 <li>Spring MVC</li>
 <li>Spring Data JPA</li>
 <li>MYSQL - SQL</li>
-<li>thymeleaf 템플릿 엔진thymeleaf 템플릿 엔진</li>
+<li>thymeleaf 템플릿 엔진</li>
