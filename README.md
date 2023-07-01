@@ -2,6 +2,7 @@
 
 ![todolist](https://github.com/vhdhxh/todoproject/assets/121997097/8d76356e-6966-496b-96f8-e7b71ed33763)
 
+Spring Boot , JPA 학습의 이해를 위해 간단하게 만들어 본 미니프로젝트 입니다.
 
 <h1>사용된 기술</h1> 
 <li>Spring Boot</li>
